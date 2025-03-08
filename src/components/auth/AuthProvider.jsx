@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 // Create auth context
 const AuthContext = createContext({
@@ -21,6 +22,7 @@ const AuthProvider = ({ children }) => {
       setUser({
         role: userRole,
         name: localStorage.getItem("userName") || "User",
+        email: `${userRole.toLowerCase()}@example.com`,
       });
     }
     setLoading(false);

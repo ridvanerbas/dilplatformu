@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/components/auth/AuthProvider.jsx";
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
   const location = useLocation();

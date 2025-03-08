@@ -17,6 +17,8 @@ import {
   Globe,
   MessageCircle,
   CreditCard,
+  Calendar,
+  User,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -136,13 +138,9 @@ const Sidebar = ({
 
   // Navigation items based on user role
   const getNavItems = () => {
+    // Common items for all users
     const commonItems = [
       { icon: <Home className="h-5 w-5" />, label: "Dashboard", href: "/" },
-      {
-        icon: <Trophy className="h-5 w-5" />,
-        label: "Achievements",
-        href: "/achievements",
-      },
       {
         icon: <MessageCircle className="h-5 w-5" />,
         label: "Forum",
@@ -153,8 +151,14 @@ const Sidebar = ({
         label: "Membership",
         href: "/membership",
       },
+      {
+        icon: <User className="h-5 w-5" />,
+        label: "Profile",
+        href: "/profile",
+      },
     ];
 
+    // Student-specific items
     const studentItems = [
       {
         icon: <BookOpen className="h-5 w-5" />,
@@ -185,8 +189,14 @@ const Sidebar = ({
           { label: "Stories", href: "/practice/stories" },
         ],
       },
+      {
+        icon: <Trophy className="h-5 w-5" />,
+        label: "Achievements",
+        href: "/achievements",
+      },
     ];
 
+    // Teacher-specific items
     const teacherItems = [
       {
         icon: <BookOpen className="h-5 w-5" />,
@@ -213,8 +223,14 @@ const Sidebar = ({
         label: "Materials",
         href: "/materials",
       },
+      {
+        icon: <Calendar className="h-5 w-5" />,
+        label: "Schedule",
+        href: "/schedule",
+      },
     ];
 
+    // Admin-specific items
     const adminItems = [
       {
         icon: <Users className="h-5 w-5" />,
@@ -239,6 +255,7 @@ const Sidebar = ({
       },
     ];
 
+    // Return different navigation items based on user role
     switch (userRole) {
       case "student":
         return [...commonItems, ...studentItems];

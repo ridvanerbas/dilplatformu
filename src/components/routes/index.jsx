@@ -6,6 +6,7 @@ import UnauthorizedPage from "@/components/auth/UnauthorizedPage";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ForumHome from "@/components/forum/ForumHome";
 import MembershipPlans from "@/components/membership/MembershipPlans";
+import ProfilePage from "@/components/profile/ProfilePage";
 
 const AppRoutes = () => {
   return (
@@ -199,8 +200,16 @@ const AppRoutes = () => {
       <Route
         path="/achievements"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["student"]}>
             <Home currentView="achievements" />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />

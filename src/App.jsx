@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { AuthProvider } from "./components/auth/AuthProvider";
+import AuthProvider from "./components/auth/AuthProvider.jsx";
 import AppRoutes from "./components/routes";
 import { Toaster } from "./components/ui/toaster";
 import routes from "tempo-routes";

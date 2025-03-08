@@ -16,7 +16,7 @@ import MembershipPlans from "./membership/MembershipPlans";
 import ForumHome from "./forum/ForumHome";
 import ScheduleManager from "./teacher/ScheduleManager";
 import MaterialsManager from "./content/MaterialsManager";
-import { useAuth } from "@/lib/auth";
+import { useAuth } from "@/components/auth/AuthProvider.jsx";
 
 const Home = ({ currentView = "dashboard", defaultTab }) => {
   const [view, setView] = useState(currentView);
@@ -40,11 +40,14 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
     // Get user role from auth context
     const userRole = user?.role || "student";
 
+    // Log the current view and role for debugging
+    console.log(`Rendering view: ${view} for role: ${userRole}`);
+
     // Admin views
     if (userRole === "admin") {
       switch (view) {
         case "dashboard":
-          return <AdminDashboard userName={user?.name} />;
+          return <AdminDashboard userName={user?.name} isAdmin={true} />;
         case "users":
           return <UserManagement />;
         case "content":
@@ -56,7 +59,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "forum":
           return <ForumHome />;
         default:
-          return <AdminDashboard userName={user?.name} />;
+          return <AdminDashboard userName={user?.name} isAdmin={true} />;
       }
     }
 
@@ -66,13 +69,141 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "dashboard":
           return <AdminDashboard userName={user?.name} isTeacher={true} />;
         case "courses":
-          return <div>Teacher Courses</div>;
+          return (
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h1 className="text-2xl font-bold mb-4">Teacher Courses</h1>
+              <p className="text-muted-foreground mb-6">
+                Manage your courses, materials, and student enrollments.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Spanish for Beginners</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    15 students enrolled
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Manage
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Business English</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    8 students enrolled
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Manage
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         case "lessons":
-          return <div>Lessons Management</div>;
+          return (
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h1 className="text-2xl font-bold mb-4">Lessons Management</h1>
+              <p className="text-muted-foreground mb-6">
+                Create and manage lessons for your courses.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Spanish Greetings</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Spanish for Beginners • Lesson 1
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Edit
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Business Vocabulary</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Business English • Lesson 2
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         case "questions":
-          return <div>Questions Management</div>;
+          return (
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h1 className="text-2xl font-bold mb-4">Questions Management</h1>
+              <p className="text-muted-foreground mb-6">
+                Create and manage questions for assessments and quizzes.
+              </p>
+              <div className="grid grid-cols-1 gap-4">
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">
+                    Spanish Vocabulary Quiz
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    10 questions • Multiple choice
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Edit
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">
+                    Business English Assessment
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    15 questions • Mixed format
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         case "students":
-          return <div>Student Management</div>;
+          return (
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h1 className="text-2xl font-bold mb-4">Student Management</h1>
+              <p className="text-muted-foreground mb-6">
+                View and manage your students and their progress.
+              </p>
+              <div className="grid grid-cols-1 gap-4">
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">John Smith</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Spanish for Beginners • 75% complete
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      View Progress
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Maria Garcia</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Business English • 45% complete
+                  </p>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      View Progress
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         case "materials":
           return <MaterialsManager />;
         case "schedule":
@@ -92,7 +223,50 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "dashboard":
           return <AdminDashboard userName={user?.name} isStudent={true} />;
         case "courses":
-          return <div>My Courses</div>;
+          return (
+            <div className="p-6 bg-white rounded-lg shadow">
+              <h1 className="text-2xl font-bold mb-4">My Courses</h1>
+              <p className="text-muted-foreground mb-6">
+                Access your enrolled courses and continue your learning journey.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">Spanish for Beginners</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Progress: 65%
+                  </p>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                    <div
+                      className="bg-primary h-2.5 rounded-full"
+                      style={{ width: "65%" }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Continue Learning
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-slate-50">
+                  <h2 className="font-semibold mb-2">French Basics</h2>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Progress: 30%
+                  </p>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                    <div
+                      className="bg-primary h-2.5 rounded-full"
+                      style={{ width: "30%" }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button className="text-sm text-primary hover:underline">
+                      Continue Learning
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         case "vocabulary":
           return <VocabularyManager />;
         case "sentences":
