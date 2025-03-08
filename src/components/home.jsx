@@ -16,6 +16,7 @@ import MembershipPlans from "./membership/MembershipPlans";
 import ForumHome from "./forum/ForumHome";
 import ScheduleManager from "./teacher/ScheduleManager";
 import MaterialsManager from "./content/MaterialsManager";
+import CourseList from "./courses/CourseList";
 import { useAuth } from "@/components/auth/AuthProvider.jsx";
 
 const Home = ({ currentView = "dashboard", defaultTab }) => {
@@ -225,51 +226,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "dashboard":
           return <AdminDashboard userName={user?.name} isStudent={true} />;
         case "courses":
-          return (
-            <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Kurslarım</h1>
-              <p className="text-muted-foreground mb-6">
-                Kayıtlı olduğunuz kurslara erişin ve öğrenme yolculuğunuza devam
-                edin.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Başlangıç İspanyolcası</h2>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    İlerleme: %65
-                  </p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                    <div
-                      className="bg-primary h-2.5 rounded-full"
-                      style={{ width: "65%" }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-end">
-                    <button className="text-sm text-primary hover:underline">
-                      Öğrenmeye Devam Et
-                    </button>
-                  </div>
-                </div>
-                <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Fransızca Temelleri</h2>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    İlerleme: %30
-                  </p>
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                    <div
-                      className="bg-primary h-2.5 rounded-full"
-                      style={{ width: "30%" }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-end">
-                    <button className="text-sm text-primary hover:underline">
-                      Öğrenmeye Devam Et
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
+          return <CourseList />;
         case "vocabulary":
           return <VocabularyManager />;
         case "sentences":

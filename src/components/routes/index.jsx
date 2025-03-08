@@ -10,6 +10,9 @@ import ProfilePage from "@/components/profile/ProfilePage";
 import DialoguePractice from "@/components/student/DialoguePractice";
 import StoryPractice from "@/components/student/StoryPractice";
 import ListeningRoom from "@/components/student/ListeningRoom";
+import Achievements from "@/components/student/Achievements";
+import CourseList from "@/components/courses/CourseList";
+import CourseDetail from "@/components/courses/CourseDetail";
 
 const AppRoutes = () => {
   return (
@@ -88,7 +91,15 @@ const AppRoutes = () => {
         path="/courses"
         element={
           <ProtectedRoute allowedRoles={["teacher", "student"]}>
-            <Home currentView="courses" />
+            <CourseList />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/courses/:courseId"
+        element={
+          <ProtectedRoute allowedRoles={["teacher", "student"]}>
+            <CourseDetail />
           </ProtectedRoute>
         }
       />
@@ -188,7 +199,7 @@ const AppRoutes = () => {
         path="/forum"
         element={
           <ProtectedRoute>
-            <Home currentView="forum" />
+            <ForumHome />
           </ProtectedRoute>
         }
       />
@@ -196,7 +207,7 @@ const AppRoutes = () => {
         path="/membership"
         element={
           <ProtectedRoute>
-            <Home currentView="membership" />
+            <MembershipPlans />
           </ProtectedRoute>
         }
       />
@@ -204,7 +215,7 @@ const AppRoutes = () => {
         path="/achievements"
         element={
           <ProtectedRoute allowedRoles={["student"]}>
-            <Home currentView="achievements" />
+            <Achievements />
           </ProtectedRoute>
         }
       />
