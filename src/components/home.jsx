@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import DashboardLayout from "./layout/DashboardLayout";
 import AdminDashboard from "./dashboard/AdminDashboard";
 import UserManagement from "./users/UserManagement";
@@ -17,6 +17,7 @@ import ForumHome from "./forum/ForumHome";
 import ScheduleManager from "./teacher/ScheduleManager";
 import MaterialsManager from "./content/MaterialsManager";
 import CourseList from "./courses/CourseList";
+import CourseDetail from "./courses/CourseDetail";
 import { useAuth } from "@/components/auth/AuthProvider.jsx";
 
 const Home = ({ currentView = "dashboard", defaultTab }) => {
@@ -35,6 +36,9 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
     const path = location.pathname.substring(1) || "dashboard";
     setView(path);
   }, [location]);
+
+  // Get courseId from URL params if available
+  const { courseId } = useParams();
 
   // Function to render the appropriate content based on user role and current view
   const renderContent = () => {
@@ -70,38 +74,9 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "dashboard":
           return <AdminDashboard userName={user?.name} isTeacher={true} />;
         case "courses":
-          return (
-            <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Kurslarım</h1>
-              <p className="text-muted-foreground mb-6">
-                Kurslarınızı, materyallerinizi ve öğrenci kayıtlarını yönetin.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Başlangıç İspanyolcası</h2>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    15 öğrenci kayıtlı
-                  </p>
-                  <div className="flex justify-end">
-                    <button className="text-sm text-primary hover:underline">
-                      Yönet
-                    </button>
-                  </div>
-                </div>
-                <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">İş İngilizcesi</h2>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    8 öğrenci kayıtlı
-                  </p>
-                  <div className="flex justify-end">
-                    <button className="text-sm text-primary hover:underline">
-                      Yönet
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
+          return <CourseList />;
+        case "courseDetail":
+          return <CourseDetail />;
         case "lessons":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
@@ -227,6 +202,8 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
           return <AdminDashboard userName={user?.name} isStudent={true} />;
         case "courses":
           return <CourseList />;
+        case "courseDetail":
+          return <CourseDetail />;
         case "vocabulary":
           return <VocabularyManager />;
         case "sentences":

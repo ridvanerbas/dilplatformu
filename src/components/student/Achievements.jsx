@@ -138,9 +138,9 @@ const Achievements = () => {
   return (
     <div className="w-full h-full p-6 bg-white rounded-lg shadow">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Your Progress</h1>
+        <h1 className="text-2xl font-bold">Başarılarım</h1>
         <p className="text-muted-foreground">
-          Track your achievements, badges, and learning progress
+          Başarılarınızı, rozetlerinizi ve öğrenme ilerlemenizi takip edin
         </p>
       </div>
 
@@ -148,7 +148,7 @@ const Achievements = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Current Level</CardTitle>
+            <CardTitle className="text-lg">Mevcut Seviye</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -162,7 +162,7 @@ const Achievements = () => {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Total Points</CardTitle>
+            <CardTitle className="text-lg">Toplam Puanlar</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
@@ -176,7 +176,7 @@ const Achievements = () => {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Next Level</CardTitle>
+            <CardTitle className="text-lg">Sonraki Seviye</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -186,8 +186,8 @@ const Achievements = () => {
               </div>
               <Progress value={progressToNextLevel} />
               <p className="text-xs text-muted-foreground text-center">
-                {Math.round(nextLevelXP - (points % nextLevelXP))} XP needed for
-                level {level + 1}
+                {Math.round(nextLevelXP - (points % nextLevelXP))} XP{" "}
+                {level + 1}. seviyeye ulaşmak için gerekli
               </p>
             </div>
           </CardContent>
@@ -197,14 +197,14 @@ const Achievements = () => {
       {/* Tabs for Achievements and Badges */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="mb-4">
-          <TabsTrigger value="achievements">Achievements</TabsTrigger>
-          <TabsTrigger value="badges">Badges</TabsTrigger>
+          <TabsTrigger value="achievements">Başarılar</TabsTrigger>
+          <TabsTrigger value="badges">Rozetler</TabsTrigger>
         </TabsList>
 
         <TabsContent value="achievements" className="space-y-4">
           {loading ? (
             <div className="text-center py-12 text-muted-foreground">
-              Loading achievements...
+              Başarılar yükleniyor...
             </div>
           ) : (
             mockAchievements.map((achievement) => (
@@ -224,7 +224,7 @@ const Achievements = () => {
                         </div>
                         {achievement.completed ? (
                           <Badge variant="default" className="bg-green-500">
-                            Completed
+                            Tamamlandı
                           </Badge>
                         ) : (
                           <Badge variant="outline">
@@ -264,7 +264,7 @@ const Achievements = () => {
         <TabsContent value="badges" className="space-y-4">
           {loading ? (
             <div className="text-center py-12 text-muted-foreground">
-              Loading badges...
+              Rozetler yükleniyor...
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -277,7 +277,8 @@ const Achievements = () => {
                       {badge.description}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Earned on {new Date(badge.earned_at).toLocaleDateString()}
+                      Kazanıldı:{" "}
+                      {new Date(badge.earned_at).toLocaleDateString("tr-TR")}
                     </p>
                   </CardContent>
                 </Card>

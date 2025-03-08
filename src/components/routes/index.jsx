@@ -91,7 +91,7 @@ const AppRoutes = () => {
         path="/courses"
         element={
           <ProtectedRoute allowedRoles={["teacher", "student"]}>
-            <CourseList />
+            <Home currentView="courses" />
           </ProtectedRoute>
         }
       />
@@ -99,7 +99,7 @@ const AppRoutes = () => {
         path="/courses/:courseId"
         element={
           <ProtectedRoute allowedRoles={["teacher", "student"]}>
-            <CourseDetail />
+            <Home currentView="courseDetail" />
           </ProtectedRoute>
         }
       />
@@ -199,7 +199,7 @@ const AppRoutes = () => {
         path="/forum"
         element={
           <ProtectedRoute>
-            <ForumHome />
+            <Home currentView="forum" />
           </ProtectedRoute>
         }
       />
@@ -207,7 +207,7 @@ const AppRoutes = () => {
         path="/membership"
         element={
           <ProtectedRoute>
-            <MembershipPlans />
+            <Home currentView="membership" />
           </ProtectedRoute>
         }
       />
@@ -215,7 +215,7 @@ const AppRoutes = () => {
         path="/achievements"
         element={
           <ProtectedRoute allowedRoles={["student"]}>
-            <Achievements />
+            <Home currentView="achievements" />
           </ProtectedRoute>
         }
       />
