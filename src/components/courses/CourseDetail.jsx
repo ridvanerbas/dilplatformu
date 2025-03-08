@@ -14,8 +14,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const CourseDetail = () => {
-  const { courseId } = useParams();
+const CourseDetail = (props) => {
+  const params = useParams();
+  const courseIdFromParams = params.courseId;
+  const { courseId: courseIdFromProps } = props;
+  const courseId = courseIdFromProps || courseIdFromParams || "1";
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [lessons, setLessons] = useState([]);

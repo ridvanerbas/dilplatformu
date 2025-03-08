@@ -76,7 +76,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "courses":
           return <CourseList />;
         case "courseDetail":
-          return <CourseDetail />;
+          return <CourseDetail courseId={courseId} />;
         case "lessons":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
@@ -203,7 +203,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "courses":
           return <CourseList />;
         case "courseDetail":
-          return <CourseDetail />;
+          return <CourseDetail courseId={courseId} />;
         case "vocabulary":
           return <VocabularyManager />;
         case "sentences":
