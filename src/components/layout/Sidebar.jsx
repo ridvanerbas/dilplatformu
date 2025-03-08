@@ -138,9 +138,43 @@ const Sidebar = ({
 
   // Navigation items based on user role
   const getNavItems = () => {
-    // Common items for all users
-    const commonItems = [
-      { icon: <Home className="h-5 w-5" />, label: "Dashboard", href: "/" },
+    // Student-specific items
+    const studentItems = [
+      { icon: <Home className="h-5 w-5" />, label: "Ana Sayfa", href: "/" },
+      {
+        icon: <BookOpen className="h-5 w-5" />,
+        label: "Kurslarım",
+        href: "/courses",
+      },
+      {
+        icon: <FileText className="h-5 w-5" />,
+        label: "Kelime Dağarcığım",
+        href: "/vocabulary",
+      },
+      {
+        icon: <MessageSquare className="h-5 w-5" />,
+        label: "Cümlelerim",
+        href: "/sentences",
+      },
+      {
+        icon: <Headphones className="h-5 w-5" />,
+        label: "Dinleme Odası",
+        href: "/listening-room",
+      },
+      {
+        icon: <MessageSquare className="h-5 w-5" />,
+        label: "Pratik",
+        href: "/practice",
+        subItems: [
+          { label: "Diyaloglar", href: "/practice/dialogues" },
+          { label: "Hikayeler", href: "/practice/stories" },
+        ],
+      },
+      {
+        icon: <Trophy className="h-5 w-5" />,
+        label: "Başarılarım",
+        href: "/achievements",
+      },
       {
         icon: <MessageCircle className="h-5 w-5" />,
         label: "Forum",
@@ -148,123 +182,117 @@ const Sidebar = ({
       },
       {
         icon: <CreditCard className="h-5 w-5" />,
-        label: "Membership",
+        label: "Üyelik",
         href: "/membership",
       },
       {
         icon: <User className="h-5 w-5" />,
-        label: "Profile",
+        label: "Profilim",
         href: "/profile",
-      },
-    ];
-
-    // Student-specific items
-    const studentItems = [
-      {
-        icon: <BookOpen className="h-5 w-5" />,
-        label: "My Courses",
-        href: "/courses",
-      },
-      {
-        icon: <FileText className="h-5 w-5" />,
-        label: "My Vocabulary",
-        href: "/vocabulary",
-      },
-      {
-        icon: <MessageSquare className="h-5 w-5" />,
-        label: "Sentences",
-        href: "/sentences",
-      },
-      {
-        icon: <Headphones className="h-5 w-5" />,
-        label: "Listening Room",
-        href: "/listening-room",
-      },
-      {
-        icon: <MessageSquare className="h-5 w-5" />,
-        label: "Practice",
-        href: "/practice",
-        subItems: [
-          { label: "Dialogues", href: "/practice/dialogues" },
-          { label: "Stories", href: "/practice/stories" },
-        ],
-      },
-      {
-        icon: <Trophy className="h-5 w-5" />,
-        label: "Achievements",
-        href: "/achievements",
       },
     ];
 
     // Teacher-specific items
     const teacherItems = [
+      { icon: <Home className="h-5 w-5" />, label: "Ana Sayfa", href: "/" },
       {
         icon: <BookOpen className="h-5 w-5" />,
-        label: "My Courses",
+        label: "Kurslarım",
         href: "/courses",
       },
       {
         icon: <FileText className="h-5 w-5" />,
-        label: "Lessons",
+        label: "Dersler",
         href: "/lessons",
       },
       {
         icon: <GraduationCap className="h-5 w-5" />,
-        label: "Questions",
+        label: "Sorular",
         href: "/questions",
       },
       {
         icon: <Users className="h-5 w-5" />,
-        label: "Students",
+        label: "Öğrenciler",
         href: "/students",
       },
       {
         icon: <FileText className="h-5 w-5" />,
-        label: "Materials",
+        label: "Materyaller",
         href: "/materials",
       },
       {
         icon: <Calendar className="h-5 w-5" />,
-        label: "Schedule",
+        label: "Program",
         href: "/schedule",
+      },
+      {
+        icon: <MessageCircle className="h-5 w-5" />,
+        label: "Forum",
+        href: "/forum",
+      },
+      {
+        icon: <CreditCard className="h-5 w-5" />,
+        label: "Üyelik",
+        href: "/membership",
+      },
+      {
+        icon: <User className="h-5 w-5" />,
+        label: "Profilim",
+        href: "/profile",
       },
     ];
 
     // Admin-specific items
     const adminItems = [
+      { icon: <Home className="h-5 w-5" />, label: "Ana Sayfa", href: "/" },
       {
         icon: <Users className="h-5 w-5" />,
-        label: "User Management",
+        label: "Kullanıcı Yönetimi",
         href: "/users",
       },
       {
         icon: <Globe className="h-5 w-5" />,
-        label: "Content Management",
+        label: "İçerik Yönetimi",
         href: "/content",
         subItems: [
-          { label: "Languages", href: "/content/languages" },
-          { label: "Courses", href: "/content/courses" },
-          { label: "Dictionary", href: "/content/dictionary" },
-          { label: "Materials", href: "/content/materials" },
+          { label: "Diller", href: "/content/languages" },
+          { label: "Kurslar", href: "/content/courses" },
+          { label: "Sözlük", href: "/content/dictionary" },
+          { label: "Materyaller", href: "/content/materials" },
         ],
       },
       {
         icon: <Settings className="h-5 w-5" />,
-        label: "System Settings",
+        label: "Sistem Ayarları",
         href: "/settings",
+      },
+      {
+        icon: <MessageCircle className="h-5 w-5" />,
+        label: "Forum",
+        href: "/forum",
+      },
+      {
+        icon: <CreditCard className="h-5 w-5" />,
+        label: "Üyelik Planları",
+        href: "/membership",
+      },
+      {
+        icon: <User className="h-5 w-5" />,
+        label: "Profilim",
+        href: "/profile",
       },
     ];
 
     // Return different navigation items based on user role
     switch (userRole) {
       case "student":
-        return [...commonItems, ...studentItems];
+        return studentItems;
       case "teacher":
-        return [...commonItems, ...teacherItems];
+        return teacherItems;
       case "admin":
-        return [...commonItems, ...adminItems];
+        return adminItems;
       default:
-        return commonItems;
+        return studentItems;
     }
   };
 
@@ -272,7 +300,7 @@ const Sidebar = ({
     <aside className="flex h-full w-[280px] flex-col bg-background border-r">
       {/* Logo */}
       <div className="flex h-16 items-center px-6">
-        <h1 className="text-xl font-bold">Language Learning</h1>
+        <h1 className="text-xl font-bold">Dil Öğrenme Platformu</h1>
       </div>
 
       <Separator />
@@ -321,11 +349,11 @@ const Sidebar = ({
               <TooltipTrigger asChild>
                 <Button variant="outline" size="sm" onClick={onLogout}>
                   <LogOut className="h-4 w-4 mr-2" />
-                  Logout
+                  Çıkış
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Sign out of your account</p>
+                <p>Hesabınızdan çıkış yapın</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -340,7 +368,7 @@ const Sidebar = ({
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Profile settings</p>
+                <p>Profil ayarları</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

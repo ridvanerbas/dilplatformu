@@ -12,17 +12,17 @@ const UnauthorizedPage = () => {
         <div className="rounded-full bg-yellow-100 p-6 mb-6">
           <ShieldAlert className="h-12 w-12 text-yellow-600" />
         </div>
-        <h1 className="text-3xl font-bold mb-2">Access Denied</h1>
+        <h1 className="text-3xl font-bold mb-2">Erişim Reddedildi</h1>
         <p className="text-muted-foreground mb-6">
-          You don't have permission to access this page. Please contact your
-          administrator if you believe this is an error.
+          Bu sayfaya erişim izniniz yok. Bunun bir hata olduğunu düşünüyorsanız
+          lütfen yöneticinizle iletişime geçin.
         </p>
         <div className="flex gap-4">
           <Button onClick={() => navigate("/")} variant="default">
-            Go to Dashboard
+            Panele Git
           </Button>
           <Button onClick={() => navigate(-1)} variant="outline">
-            Go Back
+            Geri Dön
           </Button>
         </div>
       </div>

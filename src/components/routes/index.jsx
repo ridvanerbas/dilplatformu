@@ -7,6 +7,9 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ForumHome from "@/components/forum/ForumHome";
 import MembershipPlans from "@/components/membership/MembershipPlans";
 import ProfilePage from "@/components/profile/ProfilePage";
+import DialoguePractice from "@/components/student/DialoguePractice";
+import StoryPractice from "@/components/student/StoryPractice";
+import ListeningRoom from "@/components/student/ListeningRoom";
 
 const AppRoutes = () => {
   return (
@@ -151,7 +154,7 @@ const AppRoutes = () => {
         path="/listening-room"
         element={
           <ProtectedRoute allowedRoles={["student"]}>
-            <Home currentView="listening-room" />
+            <ListeningRoom />
           </ProtectedRoute>
         }
       />
@@ -167,7 +170,7 @@ const AppRoutes = () => {
         path="/practice/dialogues"
         element={
           <ProtectedRoute allowedRoles={["student"]}>
-            <Home currentView="practice/dialogues" />
+            <DialoguePractice />
           </ProtectedRoute>
         }
       />
@@ -175,7 +178,7 @@ const AppRoutes = () => {
         path="/practice/stories"
         element={
           <ProtectedRoute allowedRoles={["student"]}>
-            <Home currentView="practice/stories" />
+            <StoryPractice />
           </ProtectedRoute>
         }
       />

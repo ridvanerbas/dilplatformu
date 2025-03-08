@@ -35,7 +35,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 const vocabularySchema = z.object({
-  word_id: z.string().min(1, { message: "Word is required" }),
+  word_id: z.string().min(1, { message: "Kelime gereklidir" }),
   notes: z.string().optional(),
 });
 
@@ -63,7 +63,7 @@ const VocabularyManager = () => {
   const fetchVocabulary = async () => {
     try {
       setLoading(true);
-      // In a real app, this would filter by the current user's ID
+      // Gerçek bir uygulamada, bu mevcut kullanıcının kimliğine göre filtrelenecektir
       const { data, error } = await supabase
         .from("user_vocabulary")
         .select(`*, dictionary(*, languages(name))`);
@@ -71,10 +71,10 @@ const VocabularyManager = () => {
       if (error) throw error;
       setVocabulary(data);
     } catch (error) {
-      console.error("Error fetching vocabulary:", error);
+      console.error("Kelime dağarcığı yüklenirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to load vocabulary",
+        title: "Hata",
+        description: "Kelime dağarcığı yüklenemedi",
         variant: "destructive",
       });
     } finally {
@@ -91,7 +91,7 @@ const VocabularyManager = () => {
       if (error) throw error;
       setDictionaryWords(data);
     } catch (error) {
-      console.error("Error fetching dictionary words:", error);
+      console.error("Sözlük kelimeleri yüklenirken hata:", error);
     }
   };
 
@@ -114,14 +114,14 @@ const VocabularyManager = () => {
 
       setVocabulary(vocabulary.filter((item) => item.id !== id));
       toast({
-        title: "Success",
-        description: "Word removed from your vocabulary",
+        title: "Başarılı",
+        description: "Kelime, kelime dağarcığınızdan kaldırıldı",
       });
     } catch (error) {
-      console.error("Error deleting vocabulary item:", error);
+      console.error("Kelime dağarcığı öğesi silinirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to remove word",
+        title: "Hata",
+        description: "Kelime kaldırılamadı",
         variant: "destructive",
       });
     }
@@ -129,31 +129,31 @@ const VocabularyManager = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Check if word is already in user's vocabulary
+      // Kelimenin zaten kullanıcının kelime dağarcığında olup olmadığını kontrol et
       const { data: existingEntry, error: checkError } = await supabase
         .from("user_vocabulary")
         .select("id")
         .eq("word_id", data.word_id)
-        .eq("user_id", "current-user-id") // In a real app, this would be the actual user ID
+        .eq("user_id", "current-user-id") // Gerçek bir uygulamada, bu gerçek kullanıcı kimliği olacaktır
         .limit(1);
 
       if (checkError) throw checkError;
 
       if (existingEntry && existingEntry.length > 0) {
         toast({
-          title: "Word Already Added",
-          description: "This word is already in your vocabulary",
+          title: "Kelime Zaten Eklenmiş",
+          description: "Bu kelime zaten kelime dağarcığınızda bulunuyor",
           variant: "destructive",
         });
         return;
       }
 
-      // Add word to user's vocabulary
+      // Kelimeyi kullanıcının kelime dağarcığına ekle
       const { error } = await supabase.from("user_vocabulary").insert([
         {
           word_id: data.word_id,
           notes: data.notes,
-          user_id: "current-user-id", // In a real app, this would be the actual user ID
+          user_id: "current-user-id", // Gerçek bir uygulamada, bu gerçek kullanıcı kimliği olacaktır
           added_at: new Date().toISOString(),
         },
       ]);
@@ -161,17 +161,17 @@ const VocabularyManager = () => {
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Word added to your vocabulary",
+        title: "Başarılı",
+        description: "Kelime, kelime dağarcığınıza eklendi",
       });
 
       setIsDialogOpen(false);
-      fetchVocabulary(); // Refresh the list
+      fetchVocabulary(); // Listeyi yenile
     } catch (error) {
-      console.error("Error adding word to vocabulary:", error);
+      console.error("Kelime dağarcığına kelime eklenirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to add word to vocabulary",
+        title: "Hata",
+        description: "Kelime dağarcığına kelime eklenemedi",
         variant: "destructive",
       });
     }
@@ -187,9 +187,9 @@ const VocabularyManager = () => {
   );
 
   const playAudio = (word) => {
-    // In a real app, this would play audio from a URL or use text-to-speech
-    console.log(`Playing audio for: ${word}`);
-    // Example using browser's speech synthesis
+    // Gerçek bir uygulamada, bu bir URL'den ses çalacak veya metin-konuşma kullanacaktır
+    console.log(`Ses çalınıyor: ${word}`);
+    // Tarayıcının konuşma sentezi kullanım örneği
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(word);
       window.speechSynthesis.speak(utterance);
@@ -199,17 +199,17 @@ const VocabularyManager = () => {
   return (
     <div className="w-full h-full p-6 bg-white rounded-lg shadow">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">My Vocabulary</h1>
+        <h1 className="text-2xl font-bold">Kelime Dağarcığım</h1>
         <Button onClick={handleAddWord}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Add Word
+          Kelime Ekle
         </Button>
       </div>
 
       <div className="mb-6 relative">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search your vocabulary..."
+          placeholder="Kelime dağarcığınızı arayın..."
           className="pl-10"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -218,7 +218,7 @@ const VocabularyManager = () => {
 
       {loading ? (
         <div className="text-center py-12 text-muted-foreground">
-          Loading vocabulary...
+          Kelime dağarcığı yükleniyor...
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -251,7 +251,7 @@ const VocabularyManager = () => {
                   {item.dictionary?.examples && (
                     <div className="mt-2">
                       <p className="text-xs font-medium text-muted-foreground">
-                        Examples:
+                        Örnekler:
                       </p>
                       <ul className="list-disc pl-5 text-sm">
                         {item.dictionary?.examples.map((example, index) => (
@@ -264,7 +264,7 @@ const VocabularyManager = () => {
                   {item.notes && (
                     <div className="mt-2 p-2 bg-slate-50 rounded-md">
                       <p className="text-xs font-medium text-muted-foreground">
-                        My Notes:
+                        Notlarım:
                       </p>
                       <p className="text-sm">{item.notes}</p>
                     </div>
@@ -272,7 +272,7 @@ const VocabularyManager = () => {
 
                   <div className="flex justify-between mt-4 pt-2 border-t">
                     <p className="text-xs text-muted-foreground">
-                      Added:{" "}
+                      Eklenme:{" "}
                       {new Date(item.added_at).toLocaleDateString(undefined, {
                         month: "short",
                         day: "numeric",
@@ -293,8 +293,8 @@ const VocabularyManager = () => {
           ) : (
             <div className="col-span-3 text-center py-12 text-muted-foreground">
               {searchQuery
-                ? "No matching words found in your vocabulary."
-                : "Your vocabulary is empty. Add words to get started."}
+                ? "Kelime dağarcığınızda eşleşen kelime bulunamadı."
+                : "Kelime dağarcığınız boş. Başlamak için kelime ekleyin."}
             </div>
           )}
         </div>
@@ -303,10 +303,10 @@ const VocabularyManager = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add to My Vocabulary</DialogTitle>
+            <DialogTitle>Kelime Dağarcığıma Ekle</DialogTitle>
             <DialogDescription>
-              Select a word from the dictionary to add to your personal
-              vocabulary collection.
+              Kişisel kelime dağarcığı koleksiyonunuza eklemek için sözlükten
+              bir kelime seçin.
             </DialogDescription>
           </DialogHeader>
 
@@ -317,14 +317,14 @@ const VocabularyManager = () => {
                 name="word_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Word</FormLabel>
+                    <FormLabel>Kelime</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a word" />
+                          <SelectValue placeholder="Bir kelime seçin" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -346,16 +346,17 @@ const VocabularyManager = () => {
                 name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Personal Notes (Optional)</FormLabel>
+                    <FormLabel>Kişisel Notlar (İsteğe Bağlı)</FormLabel>
                     <FormControl>
                       <textarea
                         className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Add your own notes, mnemonics, or context for this word"
+                        placeholder="Bu kelime için kendi notlarınızı, hatırlatıcılarınızı veya bağlamı ekleyin"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Add any personal notes or memory aids for this word
+                      Bu kelime için kişisel notlar veya hatırlama yardımcıları
+                      ekleyin
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -368,11 +369,11 @@ const VocabularyManager = () => {
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
                 >
-                  Cancel
+                  İptal
                 </Button>
                 <Button type="submit">
                   <BookOpen className="mr-2 h-4 w-4" />
-                  Add to Vocabulary
+                  Kelime Dağarcığına Ekle
                 </Button>
               </DialogFooter>
             </form>

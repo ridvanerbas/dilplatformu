@@ -9,22 +9,23 @@ const PracticeHub = () => {
 
   const practiceOptions = [
     {
-      title: "Dialogues",
-      description: "Practice conversations in different scenarios",
+      title: "Diyaloglar",
+      description: "Farklı senaryolarda konuşma pratiği yapın",
       icon: <MessageSquare className="h-8 w-8 text-blue-500" />,
       color: "bg-blue-50",
       path: "/practice/dialogues",
     },
     {
-      title: "Stories",
-      description: "Read and listen to stories to improve comprehension",
+      title: "Hikayeler",
+      description:
+        "Anlama becerinizi geliştirmek için hikayeler okuyun ve dinleyin",
       icon: <BookOpen className="h-8 w-8 text-purple-500" />,
       color: "bg-purple-50",
       path: "/practice/stories",
     },
     {
-      title: "Listening Room",
-      description: "Improve your listening skills with audio content",
+      title: "Dinleme Odası",
+      description: "Ses içerikleriyle dinleme becerilerinizi geliştirin",
       icon: <Headphones className="h-8 w-8 text-green-500" />,
       color: "bg-green-50",
       path: "/listening-room",
@@ -34,9 +35,9 @@ const PracticeHub = () => {
   return (
     <div className="w-full h-full p-6 bg-white rounded-lg shadow">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Practice Hub</h1>
+        <h1 className="text-2xl font-bold">Pratik Merkezi</h1>
         <p className="text-muted-foreground">
-          Choose a practice activity to improve your language skills
+          Dil becerilerinizi geliştirmek için bir pratik etkinliği seçin
         </p>
       </div>
 
@@ -59,7 +60,7 @@ const PracticeHub = () => {
                   className="w-full"
                 >
                   <Play className="mr-2 h-4 w-4" />
-                  Start Practice
+                  Pratiğe Başla
                 </Button>
               </div>
             </CardContent>
@@ -68,19 +69,23 @@ const PracticeHub = () => {
       </div>
 
       <div className="mt-8 p-6 bg-slate-50 rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Your Practice Stats</h2>
+        <h2 className="text-xl font-bold mb-4">Pratik İstatistikleriniz</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded-md shadow-sm">
-            <p className="text-sm text-muted-foreground">Total Practice Time</p>
-            <p className="text-2xl font-bold">12h 30m</p>
+            <p className="text-sm text-muted-foreground">
+              Toplam Pratik Süresi
+            </p>
+            <p className="text-2xl font-bold">12s 30d</p>
           </div>
           <div className="bg-white p-4 rounded-md shadow-sm">
-            <p className="text-sm text-muted-foreground">Completed Sessions</p>
+            <p className="text-sm text-muted-foreground">
+              Tamamlanan Oturumlar
+            </p>
             <p className="text-2xl font-bold">24</p>
           </div>
           <div className="bg-white p-4 rounded-md shadow-sm">
-            <p className="text-sm text-muted-foreground">Current Streak</p>
-            <p className="text-2xl font-bold">5 days</p>
+            <p className="text-sm text-muted-foreground">Mevcut Seri</p>
+            <p className="text-2xl font-bold">5 gün</p>
           </div>
         </div>
       </div>

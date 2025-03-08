@@ -26,7 +26,7 @@ const DashboardLayout = ({
           userName={userName}
           userAvatar={userAvatar}
         />
-        <main className="flex-1 overflow-auto p-4">
+        <main className="flex-1 overflow-auto p-4 bg-slate-50">
           <div className="container mx-auto">{children}</div>
         </main>
       </div>

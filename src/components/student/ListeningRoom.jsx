@@ -1,90 +1,91 @@
 import React, { useState, useEffect } from "react";
 import {
+  Headphones,
   Play,
   Pause,
-  SkipForward,
   SkipBack,
+  SkipForward,
   Volume2,
-  VolumeX,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
 const ListeningRoom = () => {
-  const [audioMaterials, setAudioMaterials] = useState([]);
-  const [languages, setLanguages] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [currentAudio, setCurrentAudio] = useState(null);
+  const [audioTracks, setAudioTracks] = useState([]);
+  const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(80);
-  const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [volume, setVolume] = useState(80);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchLanguages();
-    fetchAudioMaterials();
+    fetchAudioTracks();
   }, []);
 
-  useEffect(() => {
-    if (selectedLanguage) {
-      fetchAudioMaterials(selectedLanguage);
-    }
-  }, [selectedLanguage]);
-
-  const fetchLanguages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("languages")
-        .select("*")
-        .eq("status", "active");
-
-      if (error) throw error;
-      setLanguages(data);
-    } catch (error) {
-      console.error("Error fetching languages:", error);
-    }
-  };
-
-  const fetchAudioMaterials = async (languageId = null) => {
+  const fetchAudioTracks = async () => {
     try {
       setLoading(true);
-      let query = supabase
-        .from("materials")
-        .select(`*, languages(name)`)
-        .eq("type", "audio");
+      // In a real app, this would fetch from your database
+      // For demo purposes, we'll use mock data
+      const mockTracks = [
+        {
+          id: "1",
+          title: "Temel İspanyolca Konuşma",
+          artist: "Maria Rodriguez",
+          language: "İspanyolca",
+          duration: 180, // seconds
+          level: "Başlangıç",
+          cover_image:
+            "https://images.unsplash.com/photo-1590002893558-64f0d58dcca4?w=300&q=80",
+          audio_url: "https://example.com/audio/spanish-conversation.mp3",
+        },
+        {
+          id: "2",
+          title: "Fransızca Telaffuz Rehberi",
+          artist: "Jean Dupont",
+          language: "Fransızca",
+          duration: 240,
+          level: "Orta Seviye",
+          cover_image:
+            "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300&q=80",
+          audio_url: "https://example.com/audio/french-pronunciation.mp3",
+        },
+        {
+          id: "3",
+          title: "Almanca İş Kelime Hazinesi",
+          artist: "Hans Mueller",
+          language: "Almanca",
+          duration: 300,
+          level: "İleri Seviye",
+          cover_image:
+            "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?w=300&q=80",
+          audio_url: "https://example.com/audio/german-business.mp3",
+        },
+        {
+          id: "4",
+          title: "Japonca Selamlaşmalar",
+          artist: "Yuki Tanaka",
+          language: "Japonca",
+          duration: 210,
+          level: "Başlangıç",
+          cover_image:
+            "https://images.unsplash.com/photo-1528164344705-47542687000d?w=300&q=80",
+          audio_url: "https://example.com/audio/japanese-greetings.mp3",
+        },
+      ];
 
-      if (languageId) {
-        query = query.eq("language_id", languageId);
-      }
-
-      const { data, error } = await query;
-
-      if (error) throw error;
-      setAudioMaterials(data);
-
-      // Set first audio as current if none selected
-      if (data.length > 0 && !currentAudio) {
-        setCurrentAudio(data[0]);
-      }
+      setAudioTracks(mockTracks);
+      setCurrentTrack(mockTracks[0]);
     } catch (error) {
-      console.error("Error fetching audio materials:", error);
+      console.error("Error fetching audio tracks:", error);
       toast({
-        title: "Error",
-        description: "Failed to load audio materials",
+        title: "Hata",
+        description: "Ses parçaları yüklenemedi",
         variant: "destructive",
       });
     } finally {
@@ -92,59 +93,41 @@ const ListeningRoom = () => {
     }
   };
 
-  const handlePlayPause = () => {
-    // In a real app, this would control an actual audio player
-    setIsPlaying(!isPlaying);
-    toast({
-      title: isPlaying ? "Paused" : "Playing",
-      description: `${currentAudio?.title}`,
-    });
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  const handleNext = () => {
-    if (!audioMaterials.length) return;
-
-    const currentIndex = audioMaterials.findIndex(
-      (audio) => audio.id === currentAudio?.id,
-    );
-    const nextIndex = (currentIndex + 1) % audioMaterials.length;
-    setCurrentAudio(audioMaterials[nextIndex]);
-    setProgress(0);
-
-    if (isPlaying) {
-      // Simulate restarting playback
-      setIsPlaying(false);
-      setTimeout(() => setIsPlaying(true), 100);
-    }
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+    // In a real app, this would control the audio playback
   };
 
   const handlePrevious = () => {
-    if (!audioMaterials.length) return;
-
-    const currentIndex = audioMaterials.findIndex(
-      (audio) => audio.id === currentAudio?.id,
+    const currentIndex = audioTracks.findIndex(
+      (track) => track.id === currentTrack.id,
     );
     const prevIndex =
-      (currentIndex - 1 + audioMaterials.length) % audioMaterials.length;
-    setCurrentAudio(audioMaterials[prevIndex]);
+      currentIndex > 0 ? currentIndex - 1 : audioTracks.length - 1;
+    setCurrentTrack(audioTracks[prevIndex]);
     setProgress(0);
-
-    if (isPlaying) {
-      // Simulate restarting playback
-      setIsPlaying(false);
-      setTimeout(() => setIsPlaying(true), 100);
-    }
   };
 
-  const handleVolumeChange = (value) => {
-    setVolume(value[0]);
-    if (isMuted && value[0] > 0) {
-      setIsMuted(false);
-    }
+  const handleNext = () => {
+    const currentIndex = audioTracks.findIndex(
+      (track) => track.id === currentTrack.id,
+    );
+    const nextIndex =
+      currentIndex < audioTracks.length - 1 ? currentIndex + 1 : 0;
+    setCurrentTrack(audioTracks[nextIndex]);
+    setProgress(0);
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
+  const handleTrackSelect = (track) => {
+    setCurrentTrack(track);
+    setProgress(0);
+    setIsPlaying(true);
   };
 
   const handleProgressChange = (value) => {
@@ -152,96 +135,76 @@ const ListeningRoom = () => {
     // In a real app, this would seek the audio to the specified position
   };
 
-  const selectAudio = (audio) => {
-    setCurrentAudio(audio);
-    setProgress(0);
-    setIsPlaying(true);
+  const handleVolumeChange = (value) => {
+    setVolume(value[0]);
+    // In a real app, this would adjust the audio volume
   };
 
   // Simulate progress updates when playing
   useEffect(() => {
     let interval;
-    if (isPlaying) {
+    if (isPlaying && currentTrack) {
       interval = setInterval(() => {
         setProgress((prev) => {
-          const newProgress = prev + 0.5;
-          if (newProgress >= 100) {
-            handleNext();
-            return 0;
+          if (prev >= currentTrack.duration) {
+            clearInterval(interval);
+            setIsPlaying(false);
+            return currentTrack.duration;
           }
-          return newProgress;
+          return prev + 1;
         });
       }, 1000);
     }
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, currentTrack]);
 
   return (
     <div className="w-full h-full p-6 bg-white rounded-lg shadow">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Listening Room</h1>
-        <div className="w-48">
-          <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filter by language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All Languages</SelectItem>
-              {languages.map((language) => (
-                <SelectItem key={language.id} value={language.id}>
-                  {language.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">Dinleme Odası</h1>
+        <p className="text-muted-foreground">
+          Farklı dillerde ses içerikleriyle dinleme becerilerinizi geliştirin
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Audio Player */}
         <div className="md:col-span-2">
-          <Card className="bg-slate-50">
-            <CardContent className="p-6">
-              {currentAudio ? (
-                <>
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h2 className="text-xl font-bold">
-                        {currentAudio.title}
-                      </h2>
-                      <p className="text-sm text-muted-foreground">
-                        {currentAudio.languages?.name} •{" "}
-                        {currentAudio.file_size}
-                      </p>
-                    </div>
-                    <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center">
-                      <Volume2 className="h-6 w-6 text-primary-foreground" />
-                    </div>
+          <Card className="overflow-hidden">
+            {currentTrack && (
+              <div>
+                <div
+                  className="h-64 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${currentTrack.cover_image})`,
+                  }}
+                ></div>
+                <CardContent className="p-6">
+                  <div className="mb-4">
+                    <h2 className="text-2xl font-bold">{currentTrack.title}</h2>
+                    <p className="text-muted-foreground">
+                      {currentTrack.artist} • {currentTrack.language} •{" "}
+                      {currentTrack.level}
+                    </p>
                   </div>
 
                   {/* Progress bar */}
                   <div className="mb-4">
                     <Slider
                       value={[progress]}
-                      min={0}
-                      max={100}
-                      step={0.1}
+                      max={currentTrack.duration}
+                      step={1}
                       onValueChange={handleProgressChange}
                     />
                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                      <span>
-                        {Math.floor(progress / 60)}:
-                        {Math.floor(progress % 60)
-                          .toString()
-                          .padStart(2, "0")}
-                      </span>
-                      <span>3:45</span> {/* Placeholder duration */}
+                      <span>{formatTime(progress)}</span>
+                      <span>{formatTime(currentTrack.duration)}</span>
                     </div>
                   </div>
 
-                  {/* Playback controls */}
-                  <div className="flex items-center justify-center space-x-4">
+                  {/* Controls */}
+                  <div className="flex justify-center items-center space-x-4">
                     <Button
                       variant="ghost"
                       size="icon"
@@ -258,7 +221,7 @@ const ListeningRoom = () => {
                       {isPlaying ? (
                         <Pause className="h-6 w-6" />
                       ) : (
-                        <Play className="h-6 w-6 ml-1" />
+                        <Play className="h-6 w-6" />
                       )}
                     </Button>
                     <Button variant="ghost" size="icon" onClick={handleNext}>
@@ -267,102 +230,63 @@ const ListeningRoom = () => {
                   </div>
 
                   {/* Volume control */}
-                  <div className="flex items-center space-x-2 mt-6">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={toggleMute}
-                      className="h-8 w-8"
-                    >
-                      {isMuted ? (
-                        <VolumeX className="h-4 w-4" />
-                      ) : (
-                        <Volume2 className="h-4 w-4" />
-                      )}
-                    </Button>
-                    <div className="w-full">
-                      <Slider
-                        value={[isMuted ? 0 : volume]}
-                        min={0}
-                        max={100}
-                        step={1}
-                        onValueChange={handleVolumeChange}
-                      />
-                    </div>
+                  <div className="flex items-center mt-6">
+                    <Volume2 className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <Slider
+                      value={[volume]}
+                      max={100}
+                      step={1}
+                      onValueChange={handleVolumeChange}
+                      className="w-32"
+                    />
                   </div>
-
-                  {/* Description */}
-                  {currentAudio.description && (
-                    <div className="mt-6 p-4 bg-white rounded-md">
-                      <h3 className="text-sm font-medium mb-2">Description</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {currentAudio.description}
-                      </p>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-64">
-                  <Volume2 className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">
-                    No audio content selected
-                  </p>
-                </div>
-              )}
-            </CardContent>
+                </CardContent>
+              </div>
+            )}
           </Card>
         </div>
 
-        {/* Audio List */}
-        <div className="md:col-span-1">
-          <Card>
-            <CardContent className="p-4">
-              <div className="mb-4">
-                <Input
-                  placeholder="Search audio content..."
-                  className="w-full"
-                />
+        {/* Track List */}
+        <div>
+          <h2 className="text-lg font-semibold mb-4">Mevcut Parçalar</h2>
+          <div className="space-y-3 overflow-auto max-h-[500px] pr-2">
+            {audioTracks.map((track) => (
+              <div
+                key={track.id}
+                className={`p-3 rounded-md cursor-pointer transition-colors ${currentTrack?.id === track.id ? "bg-primary/10 border-primary" : "bg-slate-50 hover:bg-slate-100"}`}
+                onClick={() => handleTrackSelect(track)}
+              >
+                <div className="flex items-center">
+                  <div className="h-12 w-12 rounded bg-slate-200 mr-3 overflow-hidden">
+                    <img
+                      src={track.cover_image}
+                      alt={track.title}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium truncate">{track.title}</h3>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {track.language} • {formatTime(track.duration)}
+                    </p>
+                  </div>
+                  {currentTrack?.id === track.id && isPlaying && (
+                    <div className="w-4 h-4 rounded-full bg-primary animate-pulse"></div>
+                  )}
+                </div>
               </div>
+            ))}
+          </div>
 
-              <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
-                {loading ? (
-                  <div className="text-center py-12 text-muted-foreground">
-                    Loading audio content...
-                  </div>
-                ) : audioMaterials.length > 0 ? (
-                  audioMaterials.map((audio) => (
-                    <div
-                      key={audio.id}
-                      className={`p-3 rounded-md cursor-pointer transition-colors ${currentAudio?.id === audio.id ? "bg-primary/10" : "hover:bg-slate-100"}`}
-                      onClick={() => selectAudio(audio)}
-                    >
-                      <div className="flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center mr-3">
-                          {currentAudio?.id === audio.id && isPlaying ? (
-                            <Pause className="h-4 w-4 text-primary" />
-                          ) : (
-                            <Play className="h-4 w-4 ml-0.5 text-primary" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-sm line-clamp-1">
-                            {audio.title}
-                          </h3>
-                          <p className="text-xs text-muted-foreground">
-                            {audio.languages?.name} • {audio.file_size}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="text-center py-12 text-muted-foreground">
-                    No audio content available
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="mt-6 p-4 bg-slate-50 rounded-lg">
+            <h3 className="font-medium mb-2">Dinleme İpuçları</h3>
+            <ul className="text-sm space-y-2 text-muted-foreground">
+              <li>• Her parçayı birkaç kez dinleyin</li>
+              <li>• Anahtar kelime ve ifadeleri belirlemeye çalışın</li>
+              <li>• Duyduklarınızı tekrar etmeyi deneyin</li>
+              <li>• Yeni kelimeler için not alın</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

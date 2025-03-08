@@ -77,24 +77,26 @@ const LoginForm = () => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">
-            Language Learning Platform
+            Dil Öğrenme Platformu
           </CardTitle>
-          <CardDescription>Sign in to your account to continue</CardDescription>
+          <CardDescription>
+            Devam etmek için hesabınıza giriş yapın
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-posta</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your.email@example.com"
+                placeholder="e-posta@ornek.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Şifre</Label>
               <Input
                 id="password"
                 type="password"
@@ -105,7 +107,7 @@ const LoginForm = () => {
             </div>
 
             <div className="space-y-2">
-              <Label>Select Role</Label>
+              <Label>Rol Seçin</Label>
               <div className="grid grid-cols-3 gap-2">
                 <label className="flex items-center space-x-2 border rounded-md p-2 cursor-pointer hover:bg-slate-50">
                   <input
@@ -114,21 +116,21 @@ const LoginForm = () => {
                     value="student"
                     defaultChecked
                   />
-                  <span>Student</span>
+                  <span>Öğrenci</span>
                 </label>
                 <label className="flex items-center space-x-2 border rounded-md p-2 cursor-pointer hover:bg-slate-50">
                   <input type="radio" name="role" value="teacher" />
-                  <span>Teacher</span>
+                  <span>Öğretmen</span>
                 </label>
                 <label className="flex items-center space-x-2 border rounded-md p-2 cursor-pointer hover:bg-slate-50">
                   <input type="radio" name="role" value="admin" />
-                  <span>Admin</span>
+                  <span>Yönetici</span>
                 </label>
               </div>
             </div>
 
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
             </Button>
           </form>
 
@@ -140,7 +142,8 @@ const LoginForm = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-xs text-muted-foreground">
-            By signing in, you agree to our Terms of Service and Privacy Policy
+            Giriş yaparak, Hizmet Şartlarımızı ve Gizlilik Politikamızı kabul
+            etmiş olursunuz
           </p>
         </CardFooter>
       </Card>

@@ -71,30 +71,30 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "courses":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Teacher Courses</h1>
+              <h1 className="text-2xl font-bold mb-4">Kurslarım</h1>
               <p className="text-muted-foreground mb-6">
-                Manage your courses, materials, and student enrollments.
+                Kurslarınızı, materyallerinizi ve öğrenci kayıtlarını yönetin.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Spanish for Beginners</h2>
+                  <h2 className="font-semibold mb-2">Başlangıç İspanyolcası</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    15 students enrolled
+                    15 öğrenci kayıtlı
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Manage
+                      Yönet
                     </button>
                   </div>
                 </div>
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Business English</h2>
+                  <h2 className="font-semibold mb-2">İş İngilizcesi</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    8 students enrolled
+                    8 öğrenci kayıtlı
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Manage
+                      Yönet
                     </button>
                   </div>
                 </div>
@@ -104,30 +104,32 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "lessons":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Lessons Management</h1>
+              <h1 className="text-2xl font-bold mb-4">Ders Yönetimi</h1>
               <p className="text-muted-foreground mb-6">
-                Create and manage lessons for your courses.
+                Kurslarınız için dersler oluşturun ve yönetin.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Spanish Greetings</h2>
+                  <h2 className="font-semibold mb-2">
+                    İspanyolca Selamlaşmalar
+                  </h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Spanish for Beginners • Lesson 1
+                    Başlangıç İspanyolcası • Ders 1
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Edit
+                      Düzenle
                     </button>
                   </div>
                 </div>
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Business Vocabulary</h2>
+                  <h2 className="font-semibold mb-2">İş Kelime Hazinesi</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Business English • Lesson 2
+                    İş İngilizcesi • Ders 2
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Edit
+                      Düzenle
                     </button>
                   </div>
                 </div>
@@ -137,34 +139,34 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "questions":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Questions Management</h1>
+              <h1 className="text-2xl font-bold mb-4">Soru Yönetimi</h1>
               <p className="text-muted-foreground mb-6">
-                Create and manage questions for assessments and quizzes.
+                Değerlendirmeler ve sınavlar için sorular oluşturun ve yönetin.
               </p>
               <div className="grid grid-cols-1 gap-4">
                 <div className="p-4 border rounded-lg bg-slate-50">
                   <h2 className="font-semibold mb-2">
-                    Spanish Vocabulary Quiz
+                    İspanyolca Kelime Sınavı
                   </h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    10 questions • Multiple choice
+                    10 soru • Çoktan seçmeli
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Edit
+                      Düzenle
                     </button>
                   </div>
                 </div>
                 <div className="p-4 border rounded-lg bg-slate-50">
                   <h2 className="font-semibold mb-2">
-                    Business English Assessment
+                    İş İngilizcesi Değerlendirmesi
                   </h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    15 questions • Mixed format
+                    15 soru • Karma format
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Edit
+                      Düzenle
                     </button>
                   </div>
                 </div>
@@ -174,30 +176,30 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "students":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">Student Management</h1>
+              <h1 className="text-2xl font-bold mb-4">Öğrenci Yönetimi</h1>
               <p className="text-muted-foreground mb-6">
-                View and manage your students and their progress.
+                Öğrencilerinizi ve ilerlemelerini görüntüleyin ve yönetin.
               </p>
               <div className="grid grid-cols-1 gap-4">
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">John Smith</h2>
+                  <h2 className="font-semibold mb-2">Ahmet Yılmaz</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Spanish for Beginners • 75% complete
+                    Başlangıç İspanyolcası • %75 tamamlandı
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      View Progress
+                      İlerlemeyi Görüntüle
                     </button>
                   </div>
                 </div>
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Maria Garcia</h2>
+                  <h2 className="font-semibold mb-2">Ayşe Kaya</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Business English • 45% complete
+                    İş İngilizcesi • %45 tamamlandı
                   </p>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      View Progress
+                      İlerlemeyi Görüntüle
                     </button>
                   </div>
                 </div>
@@ -225,15 +227,16 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
         case "courses":
           return (
             <div className="p-6 bg-white rounded-lg shadow">
-              <h1 className="text-2xl font-bold mb-4">My Courses</h1>
+              <h1 className="text-2xl font-bold mb-4">Kurslarım</h1>
               <p className="text-muted-foreground mb-6">
-                Access your enrolled courses and continue your learning journey.
+                Kayıtlı olduğunuz kurslara erişin ve öğrenme yolculuğunuza devam
+                edin.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">Spanish for Beginners</h2>
+                  <h2 className="font-semibold mb-2">Başlangıç İspanyolcası</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Progress: 65%
+                    İlerleme: %65
                   </p>
                   <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
                     <div
@@ -243,14 +246,14 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
                   </div>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Continue Learning
+                      Öğrenmeye Devam Et
                     </button>
                   </div>
                 </div>
                 <div className="p-4 border rounded-lg bg-slate-50">
-                  <h2 className="font-semibold mb-2">French Basics</h2>
+                  <h2 className="font-semibold mb-2">Fransızca Temelleri</h2>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Progress: 30%
+                    İlerleme: %30
                   </p>
                   <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
                     <div
@@ -260,7 +263,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
                   </div>
                   <div className="flex justify-end">
                     <button className="text-sm text-primary hover:underline">
-                      Continue Learning
+                      Öğrenmeye Devam Et
                     </button>
                   </div>
                 </div>
@@ -291,7 +294,7 @@ const Home = ({ currentView = "dashboard", defaultTab }) => {
     }
 
     // Default fallback
-    return <div>Welcome to the Language Learning Platform</div>;
+    return <div>Dil Öğrenme Platformuna Hoş Geldiniz</div>;
   };
 
   // Handle logout

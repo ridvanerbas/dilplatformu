@@ -41,9 +41,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 const sentenceSchema = z.object({
-  sentence: z.string().min(1, { message: "Sentence is required" }),
-  translation: z.string().min(1, { message: "Translation is required" }),
-  language_id: z.string().min(1, { message: "Language is required" }),
+  sentence: z.string().min(1, { message: "Cümle gereklidir" }),
+  translation: z.string().min(1, { message: "Çeviri gereklidir" }),
+  language_id: z.string().min(1, { message: "Dil gereklidir" }),
   notes: z.string().optional(),
 });
 
@@ -73,7 +73,7 @@ const SentenceManager = () => {
   const fetchSentences = async () => {
     try {
       setLoading(true);
-      // In a real app, this would filter by the current user's ID
+      // Gerçek bir uygulamada, bu mevcut kullanıcının kimliğine göre filtrelenecektir
       const { data, error } = await supabase
         .from("user_sentences")
         .select(`*, languages(name)`);
@@ -81,10 +81,10 @@ const SentenceManager = () => {
       if (error) throw error;
       setSentences(data);
     } catch (error) {
-      console.error("Error fetching sentences:", error);
+      console.error("Cümleler yüklenirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to load sentences",
+        title: "Hata",
+        description: "Cümleler yüklenemedi",
         variant: "destructive",
       });
     } finally {
@@ -102,7 +102,7 @@ const SentenceManager = () => {
       if (error) throw error;
       setLanguages(data);
     } catch (error) {
-      console.error("Error fetching languages:", error);
+      console.error("Diller yüklenirken hata:", error);
     }
   };
 
@@ -127,14 +127,14 @@ const SentenceManager = () => {
 
       setSentences(sentences.filter((item) => item.id !== id));
       toast({
-        title: "Success",
-        description: "Sentence removed from your collection",
+        title: "Başarılı",
+        description: "Cümle koleksiyonunuzdan kaldırıldı",
       });
     } catch (error) {
-      console.error("Error deleting sentence:", error);
+      console.error("Cümle silinirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to remove sentence",
+        title: "Hata",
+        description: "Cümle kaldırılamadı",
         variant: "destructive",
       });
     }
@@ -142,14 +142,14 @@ const SentenceManager = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Add sentence to user's collection
+      // Cümleyi kullanıcının koleksiyonuna ekle
       const { error } = await supabase.from("user_sentences").insert([
         {
           sentence: data.sentence,
           translation: data.translation,
           language_id: data.language_id,
           notes: data.notes,
-          user_id: "current-user-id", // In a real app, this would be the actual user ID
+          user_id: "current-user-id", // Gerçek bir uygulamada, bu gerçek kullanıcı kimliği olacaktır
           added_at: new Date().toISOString(),
         },
       ]);
@@ -157,17 +157,17 @@ const SentenceManager = () => {
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Sentence added to your collection",
+        title: "Başarılı",
+        description: "Cümle koleksiyonunuza eklendi",
       });
 
       setIsDialogOpen(false);
-      fetchSentences(); // Refresh the list
+      fetchSentences(); // Listeyi yenile
     } catch (error) {
-      console.error("Error adding sentence:", error);
+      console.error("Cümle eklenirken hata:", error);
       toast({
-        title: "Error",
-        description: "Failed to add sentence",
+        title: "Hata",
+        description: "Cümle eklenemedi",
         variant: "destructive",
       });
     }
@@ -181,9 +181,9 @@ const SentenceManager = () => {
   );
 
   const playAudio = (text) => {
-    // In a real app, this would play audio from a URL or use text-to-speech
-    console.log(`Playing audio for: ${text}`);
-    // Example using browser's speech synthesis
+    // Gerçek bir uygulamada, bu bir URL'den ses çalacak veya metin-konuşma kullanacaktır
+    console.log(`Ses çalınıyor: ${text}`);
+    // Tarayıcının konuşma sentezi kullanım örneği
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       window.speechSynthesis.speak(utterance);
@@ -193,17 +193,17 @@ const SentenceManager = () => {
   return (
     <div className="w-full h-full p-6 bg-white rounded-lg shadow">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">My Sentences</h1>
+        <h1 className="text-2xl font-bold">Cümlelerim</h1>
         <Button onClick={handleAddSentence}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Add Sentence
+          Cümle Ekle
         </Button>
       </div>
 
       <div className="mb-6 relative">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search your sentences..."
+          placeholder="Cümlelerinizi arayın..."
           className="pl-10"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -212,7 +212,7 @@ const SentenceManager = () => {
 
       {loading ? (
         <div className="text-center py-12 text-muted-foreground">
-          Loading sentences...
+          Cümleler yükleniyor...
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -241,7 +241,7 @@ const SentenceManager = () => {
                   {item.notes && (
                     <div className="mt-2 p-2 bg-slate-50 rounded-md">
                       <p className="text-xs font-medium text-muted-foreground">
-                        My Notes:
+                        Notlarım:
                       </p>
                       <p className="text-sm">{item.notes}</p>
                     </div>
@@ -249,7 +249,7 @@ const SentenceManager = () => {
 
                   <div className="flex justify-between mt-4 pt-2 border-t">
                     <p className="text-xs text-muted-foreground">
-                      Added:{" "}
+                      Eklenme:{" "}
                       {new Date(item.added_at).toLocaleDateString(undefined, {
                         month: "short",
                         day: "numeric",
@@ -270,8 +270,8 @@ const SentenceManager = () => {
           ) : (
             <div className="col-span-2 text-center py-12 text-muted-foreground">
               {searchQuery
-                ? "No matching sentences found in your collection."
-                : "Your sentence collection is empty. Add sentences to get started."}
+                ? "Koleksiyonunuzda eşleşen cümle bulunamadı."
+                : "Cümle koleksiyonunuz boş. Başlamak için cümle ekleyin."}
             </div>
           )}
         </div>
@@ -280,9 +280,9 @@ const SentenceManager = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add to My Sentences</DialogTitle>
+            <DialogTitle>Cümlelerime Ekle</DialogTitle>
             <DialogDescription>
-              Add a new sentence to your personal collection for practice.
+              Pratik yapmak için kişisel koleksiyonunuza yeni bir cümle ekleyin.
             </DialogDescription>
           </DialogHeader>
 
@@ -293,14 +293,14 @@ const SentenceManager = () => {
                 name="language_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Language</FormLabel>
+                    <FormLabel>Dil</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a language" />
+                          <SelectValue placeholder="Bir dil seçin" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -321,10 +321,10 @@ const SentenceManager = () => {
                 name="sentence"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Sentence</FormLabel>
+                    <FormLabel>Cümle</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter the sentence in the foreign language"
+                        placeholder="Yabancı dilde cümleyi girin"
                         {...field}
                       />
                     </FormControl>
@@ -338,10 +338,10 @@ const SentenceManager = () => {
                 name="translation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Translation</FormLabel>
+                    <FormLabel>Çeviri</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter the translation in your native language"
+                        placeholder="Ana dilinizde çeviriyi girin"
                         {...field}
                       />
                     </FormControl>
@@ -355,16 +355,17 @@ const SentenceManager = () => {
                 name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Personal Notes (Optional)</FormLabel>
+                    <FormLabel>Kişisel Notlar (İsteğe Bağlı)</FormLabel>
                     <FormControl>
                       <textarea
                         className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Add context, grammar notes, or usage examples"
+                        placeholder="Bağlam, dilbilgisi notları veya kullanım örnekleri ekleyin"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Add any personal notes about grammar, context, or usage
+                      Dilbilgisi, bağlam veya kullanım hakkında kişisel notlar
+                      ekleyin
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -377,11 +378,11 @@ const SentenceManager = () => {
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
                 >
-                  Cancel
+                  İptal
                 </Button>
                 <Button type="submit">
                   <MessageSquare className="mr-2 h-4 w-4" />
-                  Add Sentence
+                  Cümle Ekle
                 </Button>
               </DialogFooter>
             </form>

@@ -18,7 +18,7 @@ const Header = ({
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search..."
+            placeholder="Ara..."
             className="w-64 pl-8 rounded-full bg-slate-50"
           />
         </div>
