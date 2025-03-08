@@ -23,7 +23,7 @@ import {
 const DialoguePractice = () => {
   const [dialogues, setDialogues] = useState([]);
   const [languages, setLanguages] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedDialogue, setSelectedDialogue] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [showTranslation, setShowTranslation] = useState(false);
@@ -150,7 +150,7 @@ const DialoguePractice = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedLanguage) {
+    if (selectedLanguage && selectedLanguage !== "all") {
       const filteredDialogues = mockDialogues.filter(
         (dialogue) => dialogue.language_id === selectedLanguage,
       );
@@ -241,7 +241,7 @@ const DialoguePractice = () => {
               <SelectValue placeholder="Dile göre filtrele" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Tüm Diller</SelectItem>
+              <SelectItem value="all">Tüm Diller</SelectItem>
               {languages.map((language) => (
                 <SelectItem key={language.id} value={language.id}>
                   {language.name}
